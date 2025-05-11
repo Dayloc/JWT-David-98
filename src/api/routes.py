@@ -39,7 +39,7 @@ def handle_Public():
 @api.route('/private', methods=['POST', 'GET'])
 @jwt_required()
 def handle_Private():
-    
+
     current_user = get_jwt_identity()
     user = User.query.get(current_user)
 
@@ -50,7 +50,7 @@ def handle_Private():
         "message": "Hello! Soy ruta privada",
         "user": user.serialize()
     }
-    
+
 
 @api.route('/user/login', methods=['POST'])
 def sing_in():
@@ -72,7 +72,7 @@ def sing_in():
             "user": user.serialize()
         }), 200
 
-    except Exeption as e:
+    except Exception as e:
         print(e)
         db.session.rollback()
         return jsonify({"message": "Error creating user"}), 400
@@ -90,7 +90,7 @@ def create_user():
         db.session.add(new_user)
         db.session.commit()
         return jsonify(new_user.serialize()), 201
-    except Exeption as e:
+    except Exception as e:
         print(e)
         db.session.rollback()
         return jsonify({"message": "Error creating user"}), 400
